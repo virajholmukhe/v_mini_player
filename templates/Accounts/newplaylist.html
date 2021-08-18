@@ -1,0 +1,26 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+
+<ons-page id="page11">
+    <ons-toolbar>
+        <a href="/accounts/manageplaylist">
+            <div class="left"><ons-back-button>Playlist's</ons-back-button></div>
+            <div class="center">Rename Playlist</div>
+        </a>
+    </ons-toolbar>
+            <form method="POST">
+                {% csrf_token %}
+                <div style="text-align: center; margin-top: 30px;">
+                    <p>
+                        <ons-input name="name" id="name" modifier="underbar" placeholder="Playlist name" float></ons-input>
+                    </p>
+                    <p style="margin-top: 30px;">
+                        <button class="button" type="submit">Save</button>
+                    </p>
+                </div>
+            </form>
+</ons-page>
+
+{% endblock %}

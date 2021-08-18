@@ -1,0 +1,9 @@
+body{
+    background-color: white;
+    max-width: 428px;
+    overflow-y: auto;
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+}

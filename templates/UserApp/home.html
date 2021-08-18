@@ -1,0 +1,103 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+<ons-navigator swipeable id="myNavigator" page="page1.html"></ons-navigator>
+
+<template id="page1.html">
+  <ons-page id="page1">
+    <ons-toolbar>
+      <div class="center"><i class="fas fa-music"></i> V Music Player</div>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header>Albums</ons-list-header>
+        {% for a in albums %}
+        <a href="/albumsongs/{{a.id}}">
+        <ons-list-item>
+            <div class="left">
+                <img class="list-item__thumbnail" src="http://placekitten.com/g/40/40">
+            </div>
+            <div class="center">
+                <span class="list-item__title">{{a.name}}</span>
+                
+                <span class="list-item__subtitle">{{a.count}}</span>
+            </div>
+        </ons-list-item>
+        </a>
+        {% endfor %}
+        <a href="#">
+          <ons-list-item>
+              <div class="left">
+                  <img class="list-item__thumbnail" src="http://placekitten.com/g/40/40">
+              </div>
+              <div class="center">
+                  <span class="list-item__title">Sample name</span><span class="list-item__subtitle">id</span>
+              </div>
+          </ons-list-item>
+        </a>
+        <a href="#">
+          <ons-list-item>
+              <div class="left">
+                  <img class="list-item__thumbnail" src="http://placekitten.com/g/40/40">
+              </div>
+              <div class="center">
+                  <span class="list-item__title">Sample name</span><span class="list-item__subtitle">id</span>
+              </div>
+          </ons-list-item>
+        </a>
+    </ons-list>
+    <ons-list>
+        <ons-list-header>Favourites</ons-list-header>
+        <a href="/accounts/addtofavourite">
+            <ons-list-item>
+                <div class="left">
+                    <img class="list-item__thumbnail" src="https://www.freepnglogos.com/uploads/heart-png/emoji-heart-33.png">
+                </div>
+                <div class="center">
+                    <span class="list-item__title">Favourite Songs</span><span class="list-item__subtitle">id</span>
+                </div>
+            </ons-list-item>
+        </a>
+    </ons-list>
+    <ons-list>
+    {% if "uname" in request.session %}
+        <ons-list-header>Playlist</ons-list-header>
+        {% for p in playlist %}
+        <a href="/playlist/{{a.id}}">
+            <ons-list-item>
+                <div class="left">
+                    <img class="list-item__thumbnail" src="http://placekitten.com/g/40/40">
+                </div>
+                <div class="center">
+                    <span class="list-item__title">{{p.name}}</span>
+                
+                    <span class="list-item__subtitle">{{p.id}}</span>
+                </div>
+            </ons-list-item>
+        </a>
+        {% endfor %}
+        <a href="/accounts/manageplaylist">
+            <ons-button modifier="large--quiet">Manage Playlist's</ons-button>
+        </a>
+        <ons-list-header>Account</ons-list-header>
+        <a href="/accounts/profile">
+            <ons-button modifier="large--quiet">Profile</ons-button>
+        </a>
+        <a href="/accounts/logout">
+            <ons-button modifier="large">Log-out</ons-button>
+        </a>
+    {% else %}
+        <ons-list-header>Create Account</ons-list-header>
+        <a href="/accounts/signup">
+            <ons-list-item>Create an Account</ons-list-item>
+        </a>
+        <ons-list-header>Login </ons-list-header>
+        <a href="/accounts/login">
+            <ons-list-item>Login</ons-list-item>
+        </a>
+    {% endif %}
+    </ons-list>
+</ons-page>
+</template>
+
+{% endblock %}

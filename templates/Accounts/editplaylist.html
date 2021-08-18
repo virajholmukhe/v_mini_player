@@ -1,0 +1,53 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+<ons-page>
+    <ons-toolbar>
+        <a href="/accounts/manageplaylist">
+            <div class="left"><ons-back-button>Home</ons-back-button></div>
+            <div class="center">PlayList's</div>
+        </a>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header>Remove Songs</ons-list-header>
+        
+        <a href="/accounts/removesong/{{s.id}}">
+            <ons-list-item>
+                <div class="left">
+                    <ons-icon icon="md-tune" class="list-item__icon"></ons-icon>
+                </div>
+                <div class="center">{{s.name}}</div>
+            </ons-list-item>
+        </a>
+
+        <ons-list-header>Playlist Name: {{playlist.name}}</ons-list-header>
+        <a href="/accounts/renameplaylist/{{playlist.id}}">
+            <ons-list-item>
+                <div class="left">
+                    <ons-icon icon="md-edit" class="list-item__icon"></ons-icon>
+                </div>
+                <div class="center">Rename</div>
+            </ons-list-item>
+        </a>
+        <a href="/accounts/deleteplaylist/{{playlist.id}}">
+            <ons-list-item>
+                <div class="left">
+                    <ons-icon icon="md-delete" class="list-item__icon"></ons-icon>
+                </div>
+                <div class="center">Delete</div>
+            </ons-list-item>
+        </a>
+        <a href="/accounts/manageplaylist">
+            <ons-list-item>
+                <div class="left">
+                    <ons-icon icon="md-close" class="list-item__icon"></ons-icon>
+                </div>
+                <div class="center">Cancel</div>
+            </ons-list-item>
+        </a>
+    </ons-list>
+
+</ons-page>
+  
+
+{% endblock %}

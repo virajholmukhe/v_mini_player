@@ -1,0 +1,26 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+
+<ons-page id="page11">
+    <ons-toolbar>
+        <a href="/">
+            <div class="left"><ons-back-button>Home</ons-back-button></div>
+            <div class="center">Profile</div>
+        </a>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header>Username</ons-list-header>
+            <ons-list-item>{{profile.username}}</ons-list-item>
+        <ons-list-header>Name</ons-list-header>
+            <ons-list-item>{{profile.first_name}} {{profile.last_name}}</ons-list-item>
+        <ons-list-header>Email ID</ons-list-header>
+            <ons-list-item>{{profile.email}}</ons-list-item>
+    </ons-list>
+    <a href="/accounts/editprofile">
+        <ons-button modifier="large">Edit Profile</ons-button>
+    </a>
+</ons-page>
+
+{% endblock %}

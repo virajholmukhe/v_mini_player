@@ -1,0 +1,29 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+<ons-page>
+    <ons-toolbar>
+        <a href="/">
+            <div class="left"><ons-back-button>Home</ons-back-button></div>
+            <div class="center">LOGIN PAGE</div>
+        </a>
+    </ons-toolbar>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="text-align: center; margin-top: 30px;">
+            <p>
+                <ons-input name="uname" id="uname" modifier="underbar" placeholder="Username" float></ons-input>
+            </p>
+            <p>
+                <ons-input name="upass" id="upass" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+            </p>
+            <p style="margin-top: 30px;">
+                <button class="button" type="submit">Create Account</button>
+            </p>
+        </div>
+    </form>
+</ons-page>
+
+
+{% endblock %}

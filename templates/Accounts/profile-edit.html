@@ -1,0 +1,36 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+
+<ons-page id="editprofile">
+    <ons-toolbar>
+        <a href="/accounts/profile">
+            <div class="left"><ons-back-button>Profile</ons-back-button></div>
+            <div class="center">Edit Profile</div>
+        </a>
+    </ons-toolbar>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="text-align: center; margin-top: 30px;">
+            <p style="margin: 0px 0px 25px 0px;">
+                <ons-input name="username" readonly>Username: {{profile.username}}</ons-input>
+            </p>
+            <p style="margin: 0px 0px 25px 0px;">
+                <ons-input name="first_name" modifier="underbar" placeholder="{{profile.first_name}}" float></ons-input>
+            </p>
+            <p style="margin: 0px 0px 25px 0px;">
+                <ons-input name="last_name" modifier="underbar"  placeholder="{{profile.last_name}}" float></ons-input>
+            </p>
+            <p style="margin: 0px 0px 25px 0px;">
+                <ons-input name="email" modifier="underbar" placeholder="{{profile.email}}" float></ons-input>
+            </p>
+            <p style="margin-top: 20px;">
+                <button type="submit">Save</button>
+            </p>
+        </div>
+    </form>
+
+</ons-page>
+
+{% endblock %}
