@@ -27,8 +27,9 @@ def PlaySong(request,sid):
             flag = "True"
         except:
             flag = "False"
-    
-    return render(request,"UserApp/playsong.html",{"song":song,"next_song":next_song,"prev_song":prev_song,"flag":flag})
+        return render(request,"UserApp/playsong.html",{"song":song,"next_song":next_song,"prev_song":prev_song,"flag":flag})
+    else:
+        return render(request,"UserApp/playsong.html",{"song":song,"next_song":next_song,"prev_song":prev_song})
 
 def get_next_or_prev(models, item, direction):
     getit = False
