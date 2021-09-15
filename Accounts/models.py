@@ -44,7 +44,7 @@ class Favourite(models.Model):
     user = ForeignKey(UserInfo,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user
+        return str(self.song)
     
     class Meta:
         db_table="favourite"

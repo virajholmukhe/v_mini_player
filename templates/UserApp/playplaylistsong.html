@@ -1,0 +1,81 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+<template id="page2.html"></template>
+    <ons-page id="page1">
+        <ons-toolbar >
+            <a href="/accounts/playlist/{{song.playlist_id}}">
+                <div class="left"><ons-back-button>Songs</ons-back-button></div>
+                <div class="center"></div>
+            </a>
+        </ons-toolbar>
+        <audio controls id="music_player" preload="metadata" >
+            <source src="/media/{{song.Song.file}}" type="audio/mpeg">
+        </audio>
+        <div>
+            <ons-row style="margin: 15px 0px 15px 0px">
+                <ons-col width="30px" style="text-align: center; line-height: 31px;">
+                  <ons-icon size="20px" icon="md-volume-down"></ons-icon>
+                </ons-col>
+                <ons-col>
+                  <ons-range style="width: 100%;" id="change_vol" onchange="change_vol()" step="0.05" min="0" max="1" value="0.1"></ons-range>
+                </ons-col>
+                <ons-col width="30px" style="text-align: center; line-height: 31px;">
+                  <ons-icon size="20px" icon="md-volume-up"></ons-icon>
+                </ons-col>
+            </ons-row>
+        </div>
+        <ons-card>
+            <img src="{{song.Song.image.url}}" alt="Onsen UI" style="width: 100%">
+            <div class="title">
+                {{song.Song.name}}
+            </div>
+            <div class="content">
+                <div >
+                    <a href="/playplaylistsong/{{prev_song.Song.id}}">
+                        <button class="button button--quiet" href="#" style="margin: 20px 10px 20px 10px;" id="next"><i class="fas fa-step-backward"></i></button>
+                    </a>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" name="play" onclick="play_aud()" id="play_button"><i class="fas fa-play"></i></button>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" name="pause" onclick="pause_aud()" id="pause_button"><i class="fas fa-pause"></i></button>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" onclick="stop_aud()" id="stop_button"><i class="fas fa-stop"></i></button>
+                    <a href="/playplaylistsong/{{next_song.Song.id}}">
+                        <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" id="next"><i class="fas fa-step-forward"></i></button>
+                    </a>
+                    <form name="add_to_fav" method="POST">{% csrf_token %}
+                        <input type="hidden" name="sid" value="{{song.Song.id}}">
+                        {% if "True" in flag %}
+                        <button class="button button--quiet" id="remove" onclick="notify()"><i class="fas fa-heart" id="fav_button" style="color: red;"></i></button>
+                        {% else %}
+                        <button class="button button--quiet" id="add" onclick="notify()"><i class="fas fa-heart" id="fav_button"></i></button>
+                        {% endif %}
+
+                    </form>
+                </div>
+                <div>
+                    <ons-row style="margin: 15px 0px 15px 0px">
+                        <ons-col width="30px" style="text-align: center; line-height: 31px;">
+                            <ons-input id="start" >0:0</ons-input>
+                        </ons-col>
+                        <ons-col>
+                            <ons-range type="range" style="width: 100%;" id="duration_slider"  min="0" max="100" value="0"></ons-range>
+                        </ons-col>
+                        <ons-col width="30px" style="text-align: center; line-height: 31px;">
+                            <ons-input id="end" >0:0</ons-input>
+                        </ons-col>
+                    </ons-row>
+                </div>
+              <ons-list>
+                <ons-list-header>Albume/Movie: {{song.Song.album.name}}</ons-list-header>
+                <ons-list-item>Artist: {{song.Song.artist}}</ons-list-item>
+                <ons-list-item>Tags: {{song.Song.tags}}</ons-list-item>
+              </ons-list>
+            </div>
+        </ons-card>
+
+        <script src="{% static 'UserApp/play.js' %}"></script>
+
+    </ons-page>
+</template>
+
+{% endblock %}

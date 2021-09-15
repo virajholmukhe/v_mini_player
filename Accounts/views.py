@@ -3,7 +3,7 @@ from django.core.exceptions import EmptyResultSet
 from django.db.models.fields.mixins import FieldCacheMixin
 from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
-from Accounts.models import Favourite, Playlist, UserInfo
+from Accounts.models import Favourite, Playlist, PlaylistSongs, UserInfo
 from django.contrib import messages
 from UserApp.views import Home
 from django.contrib.auth.hashers import make_password,check_password
@@ -69,7 +69,8 @@ def editPlaylist(request,pid):
     if("uname" in request.session):
         if(request.method=="GET"):
             playlist = Playlist.objects.get(id=pid)
-            return render(request,"Accounts/editplaylist.html",{"playlist":playlist})
+            pls = PlaylistSongs.objects.filter(playlist_id=pid)
+            return render(request,"Accounts/editplaylist.html",{"playlist":playlist,"pls":pls})
 
 def renamePlaylist(request,pid):
     if("uname" in request.session):
@@ -117,11 +118,14 @@ def addToFav(request):
     if("uname" in request.session):
         if request.method == "POST":
             sid = request.POST["sid"]
-
-            fav = Favourite()
-            fav.user = UserInfo.objects.get(username=request.session["uname"]) 
-            fav.song = Song.objects.get(id=sid)
-            fav.save()
+            try:
+                fav_song = Favourite.objects.get(user_id=request.session["uname"],song_id=sid)
+                fav_song.delete()
+            except:
+                fav = Favourite()
+                fav.user = UserInfo.objects.get(username=request.session["uname"]) 
+                fav.song = Song.objects.get(id=sid)
+                fav.save()
             return redirect(addToFav)
         else:
             songs = Song.objects.all()
@@ -129,4 +133,49 @@ def addToFav(request):
             return render(request,"UserApp/favourites.html",{"fav":fav,"songs":songs})
     else:
         redirect(login)
+
+def allSongs(request,pid):
+    songs = Song.objects.all()
+    playlist = Playlist.objects.get(id=pid)
+    return render(request,"Accounts/addtoplaylist.html",{"songs":songs,"playlist":playlist})
+
+def addToPlaylist(request,sid):
+    if("uname" in request.session):
+        if request.method == "POST":
+            pid = request.POST["pid"]
+            pl = Playlist.objects.get(id=pid)
+            s = Song.objects.get(id=sid)
+            try:
+                pls = PlaylistSongs.objects.get(playlist_id=pid,Song_id=sid)
+                return redirect(managePlaylist)
+            except:
+                pls = PlaylistSongs()
+                pls.playlist = pl
+                pls.Song = s
+                pls.save()
+                return redirect(managePlaylist)
+        else:
+            pass
+    else:
+        redirect(login)
+
+def removeFromPlaylist(request,sid):
+    if("uname" in request.session):
+        if request.method == "POST":
+            pid = request.POST["pid"]
+            pls = PlaylistSongs.objects.get(playlist_id=pid,Song_id=sid)
+            pls.delete()
+            return redirect(managePlaylist)
             
+        else:
+            pass
+    else:
+        redirect(login)
+
+
+def playlistSongs(request,pid):
+    if("uname" in request.session):
+        playlist = PlaylistSongs.objects.filter(playlist_id=pid)
+        return render(request,"UserApp/playlist.html",{"playlist":playlist})
+
+

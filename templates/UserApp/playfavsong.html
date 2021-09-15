@@ -2,8 +2,8 @@
 {% load static %}
 {% block Content %}
 
-
-    <ons-page id="page1">
+<template">
+    <ons-page>
         <ons-toolbar >
             <a href="/accounts/addtofavourite">
                 <div class="left"><ons-back-button>Favourites</ons-back-button></div>
@@ -11,7 +11,7 @@
             </a>
         </ons-toolbar>
         <audio controls id="music_player" preload="metadata" >
-            <source src="/media/{{song.file}}" type="audio/mpeg">
+            <source src="/media/{{song.song.file}}" type="audio/mpeg">
         </audio>
         <div>
             <ons-row style="margin: 15px 0px 15px 0px">
@@ -27,20 +27,21 @@
             </ons-row>
         </div>
         <ons-card>
-            <img src="{{song.image.url}}" alt="Onsen UI" style="width: 100%">
+            <img src="{{song.song.image.url}}" alt="Onsen UI" style="width: 100%">
             <div class="title">
-                {{song.name}}
+                {{song.song.name}}
             </div>
             <div class="content">
-                <div class="centre" style="display: flex; justify-content: space-evenly;">
-                    <ons-button class="button" style="margin: 20px 10px 20px 10px;" modifier="outline"><i class="fas fa-heart"></i></ons-button>
-                    <ons-button style="margin: 20px 10px 20px 10px;" modifier="outline" name="play" onclick="play_aud()" id="play_button"><i class="fas fa-play"></i></ons-button>
-                    <ons-button style="margin: 20px 10px 20px 10px;" modifier="outline" name="pause" onclick="pause_aud()" id="pause_button"><i class="fas fa-pause"></i></ons-button>
-                    <ons-button style="margin: 20px 10px 20px 10px;" modifier="outline" onclick="stop_aud()" id="stop_button"><i class="fas fa-stop"></i></ons-button>
-                    <form method="post" action="/accounts/addtofavourite">{% csrf_token %}
-                        <input type="hidden" id="sid" name="sid" value="{{song.id}}">
-                        <button style="margin: 20px 10px 20px 10px; background: none; border-style: none;" modifier="outline" type="submit" name="action" value="add_to_fav" ><i class="fas fa-heart"></i></button>
-                    </form>
+                <div class="center">
+                    <a href="/playfavsong/{{prev_song.song.id}}">
+                        <button class="button button--quiet" href="#" style="margin: 20px 10px 20px 10px;" id="next"><i class="fas fa-step-backward"></i></button>
+                    </a>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" name="play" onclick="play_aud()" id="play_button"><i class="fas fa-play"></i></button>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" name="pause" onclick="pause_aud()" id="pause_button"><i class="fas fa-pause"></i></button>
+                    <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" onclick="stop_aud()" id="stop_button"><i class="fas fa-stop"></i></button>
+                    <a href="/playfavsong/{{next_song.song.id}}">
+                        <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" id="next"><i class="fas fa-step-forward"></i></button>
+                    </a>
                 </div>
                 <div>
                     <ons-row style="margin: 15px 0px 15px 0px">
@@ -56,98 +57,17 @@
                     </ons-row>
                 </div>
               <ons-list>
-                <ons-list-header>Albume/Movie: {{song.album.name}}</ons-list-header>
-                <ons-list-item>Artist: {{song.artist}}</ons-list-item>
-                <ons-list-item>Tags: {{song.tags}}</ons-list-item>
+                <ons-list-header>Albume/Movie: {{song.song.album.name}}</ons-list-header>
+                <ons-list-item>Artist: {{song.song.artist}}</ons-list-item>
+                <ons-list-item>Tags: {{song.song.tags}}</ons-list-item>
               </ons-list>
             </div>
         </ons-card>
-        <script type="text/javascript">
-            
-            $(document).ready(function (){
-                $("ons-button#play_button").hide();
-                $("ons-button#play_button").click(function (){
-                    $("ons-button#pause_button").show();
-                    $("ons-button#play_button").hide();
-                });
-                $("ons-button#pause_button").click(function (){
-                    $("ons-button#play_button").show();
-                    $("ons-button#pause_button").hide();
-                });
-                $("ons-button#stop_button").click(function (){
-                    $("ons-button#play_button").show();
-                    $("ons-button#pause_button").hide();
-                });
-            });
 
-            document.addEventListener("DOMContentLoaded", function() {
-            startplayer();
-            }, false);
+        <script src="{% static 'UserApp/play.js' %}"></script>
 
-            var player;
-            let position;
-            let seek;
-
-            function startplayer()
-            {
-                player = document.getElementById('music_player');
-                seekbar = document.getElementById("duration_slider");
-                player.controls = false;
-                player.play();
-                player.volume=0.1
-                player.addEventListener("timeupdate",(event) => {
-                    //console.log(event);
-                    let {currentTime, duration} = event.srcElement;
-                    //console.log(currentTime);
-                    //console.log(duration);
-                    let progress_time = (currentTime / duration) * 100;
-                    //console.log(progress_time);
-
-                    //console.log(player.currentTime,"live")
-
-                    //live time
-                    let min_progress = Math.floor(progress_time / 60);
-                    let sec_progress = Math.floor(progress_time % 60);
-                    let total_progress = `${min_progress}:${sec_progress}`;
-
-                    //total time or duration
-                    let min_duration = Math.floor(duration / 60);
-                    let sec_duration = Math.floor(duration % 60);
-                    let total_duration = `${min_duration}:${sec_duration}`;
-
-
-                    //console.log(Math.floor(progress_time),"aaaaaaaaaaaaaaaaa")
-                    document.getElementById("duration_slider").value=progress_time
-                    document.getElementById("start").innerHTML=total_progress
-                    document.getElementById("end").innerHTML=total_duration
-
-                    seekbar.addEventListener("click",(event) => {
-                        const { duration } = player
-                        let move_progress = (event.offsetX )
-                        //console.log(move_progress,"move_progress")
-                        player.currentTime = move_progress;
-                    });
-                });
-            }
-            function play_aud()
-            {
-                player.play();
-            } 
-            function pause_aud()
-            {
-                player.pause();
-            }
-            function stop_aud()
-            {
-                player.pause();
-                player.currentTime = 0;
-            }
-            function change_vol()
-            {
-                player.volume=document.getElementById("change_vol").value;
-            }
-        </script>
     </ons-page>
+</template>
 
 
 

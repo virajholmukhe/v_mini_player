@@ -9,16 +9,24 @@
         </a>
     </ons-toolbar>
     <ons-list>
-        <ons-list-header>Remove Songs</ons-list-header>
-        
-        <a href="/accounts/removesong/{{s.id}}">
-            <ons-list-item>
-                <div class="left">
-                    <ons-icon icon="md-tune" class="list-item__icon"></ons-icon>
-                </div>
-                <div class="center">{{s.name}}</div>
-            </ons-list-item>
+        <ons-list-header>Add Songs to playlist</ons-list-header>
+        <a href="/accounts/addtoplaylist/{{playlist.id}}">
+            <ons-button modifier="large">Add songs to playlist</ons-button>
         </a>
+        <ons-list-header>Remove Songs</ons-list-header>
+        {% for s in pls %}
+        <form id="my_form" method="POST" action="/accounts/removesongfromplaylist/{{s.Song_id}}">{% csrf_token %}
+            <input type="hidden" name="pid" value="{{playlist.id}}" >
+            <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                <ons-list-item>
+                    <div class="left">
+                        <ons-icon icon="md-delete" class="list-item__icon"></ons-icon>
+                    </div>
+                    <div class="center">{{s.Song.name}}</div>
+                </ons-list-item>
+            </a>
+        </form>
+        {% endfor %}
 
         <ons-list-header>Playlist Name: {{playlist.name}}</ons-list-header>
         <a href="/accounts/renameplaylist/{{playlist.id}}">

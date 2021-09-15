@@ -14,7 +14,13 @@ urlpatterns = [
     path('editplaylist/<pid>',views.editPlaylist),
     path('renameplaylist/<pid>',views.renamePlaylist),
     path('deleteplaylist/<pid>',views.deletePlaylist),
+    
+    path('addtoplaylist/<pid>',views.allSongs),
+    path('addsongtoplaylist/<sid>',views.addToPlaylist),
+    path('removesongfromplaylist/<sid>',views.removeFromPlaylist),
+    path('playlist/<pid>',views.playlistSongs),
 
     path('addtofavourite',views.addToFav),
+
 
 ]
