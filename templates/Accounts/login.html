@@ -10,6 +10,12 @@
             <div class="center">LOGIN PAGE</div>
         </a>
     </ons-toolbar>
+    {% if messages %}
+        {% for msg in messages %}
+    <input type="hidden" id="msg" value="{{msg}}">
+        {% endfor %}
+    {% else %}
+    {% endif %}
             <form method="POST" >
                 {% csrf_token %}
                 <div style="text-align: center; margin-top: 30px;">
@@ -24,6 +30,8 @@
                     </p>
                 </div>
             </form>
+    
+            <script src="{% static 'UserApp/popup.js' %}"></script>
 </ons-page>
 
 {% endblock %}

@@ -42,6 +42,15 @@
                     <a href="/playfavsong/{{next_song.song.id}}">
                         <button class="button button--quiet" style="margin: 20px 10px 20px 10px;" id="next"><i class="fas fa-step-forward"></i></button>
                     </a>
+                    <form name="add_to_fav" method="POST"> {% csrf_token %}
+                        <input type="hidden" name="sid" value="{{song.song.id}}">
+                        {% if "True" in flag %}
+                        <button class="button button--quiet" id="remove" onclick="notify()"><i class="fas fa-heart" id="fav_button" style="color: red;"></i></button>
+                        {% else %}
+                        <button class="button button--quiet" id="add" onclick="notify()"><i class="fas fa-heart" id="fav_button"></i></button>
+                        {% endif %}
+
+                    </form>
                 </div>
                 <div>
                     <ons-row style="margin: 15px 0px 15px 0px">

@@ -12,7 +12,7 @@
         <ons-list-header>Playlists</ons-list-header>
         {% for p in playlist %}
         <a href="/accounts/editplaylist/{{p.id}}">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <img class="list-item__thumbnail" src="{% static 'Images/pngegg.png' %}">
                 </div>
@@ -25,7 +25,7 @@
         <br>
     
         <a href="/accounts/newplaylist">
-            <ons-button style="margin: 20px 0px 20px 0px;" modifier="large--quiet">Create New</ons-button>
+            <ons-button ripple style="margin: 20px 0px 20px 0px;" modifier="large--quiet">Create New</ons-button>
         </a>
 
     </ons-list>

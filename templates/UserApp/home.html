@@ -7,11 +7,22 @@
 <template id="page1.html">
   <ons-page id="page1">
     <ons-toolbar>
-      <div class="center"><i class="fas fa-music"></i> V Music Player</div>
+        <div class="center">
+            <i class="fas fa-music"></i> V Music Player
+        </div>
+        {% if "uname" in request.session %}
+        <div class="right">
+            <a href="/accounts/profile">
+                <ons-toolbar-button style="color: black;">
+                    <i class="fas fa-user"></i>
+                </ons-toolbar-button>
+            </a>
+        </div>
+        {% else %}
+        {% endif %}
     </ons-toolbar>
     <form class="d-flex" action="/searched_tracks">
         <input type="search" placeholder="Search" class="search-input search-input" name="sq" style="width: 100%; margin-top: 5px;">
-        
     </form>
     <p style="text-align: center; margin-top: 10px;">
         
@@ -19,8 +30,8 @@
     <ons-list>
         <ons-list-header>Albums</ons-list-header>
         {% for a in albums %}
-        <a href="/albumsongs/{{a.id}}">
-        <ons-list-item>
+        <a  href="/albumsongs/{{a.id}}">
+        <ons-list-item ripple>
             <div class="left">
                 <img class="list-item__thumbnail" src="{% static 'Images/album.jpg' %}">
             </div>
@@ -33,10 +44,17 @@
         {% endfor %}
     </ons-list>
     <ons-list>
+
     {% if "uname" in request.session %}
+        {% if messages %}
+            {% for msg in messages %}
+                <input type="hidden" id="msg" value="{{msg}}">
+            {% endfor %}
+        {% else %}
+        {% endif %}
         <ons-list-header>Favourites</ons-list-header>
         <a href="/accounts/addtofavourite">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <img class="list-item__thumbnail" src="https://www.freepnglogos.com/uploads/heart-png/emoji-heart-33.png">
                 </div>
@@ -48,7 +66,7 @@
         <ons-list-header>Playlist</ons-list-header>
         {% for p in playlist %}
         <a href="/accounts/playlist/{{p.id}}">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <img class="list-item__thumbnail" src="{% static 'Images/pngegg.png' %}">
                 </div>
@@ -62,26 +80,41 @@
         {% endfor %}
         
         <a href="/accounts/manageplaylist">
-            <ons-button modifier="large--quiet">Manage Playlist's</ons-button>
+            <ons-button ripple modifier="large--quiet">Manage Playlist's</ons-button>
         </a>
         <ons-list-header>Account</ons-list-header>
         <a href="/accounts/profile">
-            <ons-button modifier="large--quiet">Profile</ons-button>
+            <ons-button ripple modifier="large--quiet">Profile</ons-button>
         </a>
         <a href="/accounts/logout">
-            <ons-button modifier="large">Log-out</ons-button>
+            <ons-button ripple modifier="large">Log-out</ons-button>
         </a>
     {% else %}
         <ons-list-header>Create Account</ons-list-header>
         <a href="/accounts/signup">
-            <ons-list-item>Create an Account</ons-list-item>
+            <ons-list-item ripple>Create an Account</ons-list-item>
         </a>
         <ons-list-header>Login </ons-list-header>
         <a href="/accounts/login">
-            <ons-list-item>Login</ons-list-item>
+            <ons-list-item ripple>Login</ons-list-item>
         </a>
     {% endif %}
+    <ons-list-header>About App</ons-list-header>
+        <a href="/about">
+            <ons-list-item ripple>
+                <div class="left">
+                    <img class="list-item__thumbnail" src="{% static 'Images/vminilogo.jpg' %}">
+                </div>
+                <div class="center">
+                    <span class="list-item__title">V Mini Music Player</span>
+                    
+                    <span class="list-item__subtitle">v1.0</span>
+                </div>
+            </ons-list-item>
+        </a>
     </ons-list>
+
+    <script src="{% static 'UserApp/popup.js' %}"></script>
 </ons-page>
 </template>
 

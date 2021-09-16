@@ -11,9 +11,10 @@
         </ons-toolbar>
         <ons-list>
             <ons-list-header>Favourites</ons-list-header>
+            {% if fav %}
             {% for s in fav %}
             <a href="/playfavsong/{{s.song.id}}">
-                <ons-list-item>
+                <ons-list-item ripple>
                     <div class="left">
                         <img class="list-item__thumbnail" src="{% static 'Images/tracks.jpg' %}">
                     </div>
@@ -23,6 +24,13 @@
                 </ons-list-item>
             </a>
             {% endfor %}
+            {% else %}
+                <ons-list-item ripple>
+                    <div class="center">
+                        <span class="list-item__title">No songs in Favourites, add them by clicking heart from play song page.</span>
+                    </div>
+                </ons-list-item>
+            {% endif %}
         </ons-list>
     </ons-page>
 

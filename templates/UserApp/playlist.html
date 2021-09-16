@@ -13,7 +13,7 @@
             <ons-list-header>Playlist Song's</ons-list-header>
             {% for s in playlist %}
             <a href="/playplaylistsong/{{s.Song.id}}">
-                <ons-list-item>
+                <ons-list-item ripple>
                     <div class="left">
                         <img class="list-item__thumbnail" src="{% static 'Images/tracks.jpg' %}">
                     </div>
@@ -24,6 +24,9 @@
                 </ons-list-item>
             </a>
             {% endfor %}
+            <a href="/accounts/addtoplaylist/{{pid}}">
+                <ons-button ripple modifier="large">Add songs to playlist</ons-button>
+            </a>
         </ons-list>
 
     </ons-page>

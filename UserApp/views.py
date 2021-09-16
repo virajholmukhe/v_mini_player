@@ -45,13 +45,19 @@ def get_next_or_prev(models, item, direction):
     return False
 
 def PlayFavSong(request,sid):
-    song = Favourite.objects.get(song_id=sid)
+    song = Favourite.objects.get(song_id=sid,user_id=request.session["uname"])
     songs = Favourite.objects.filter(user_id=request.session["uname"])
     next_song = get_next_or_prev(songs,song,"next")
     prev_song = get_next_or_prev(songs,song,"prev")
 
+    try:
+        fav_song = Favourite.objects.get(user_id=request.session["uname"],song_id=sid)
+        flag = "True"
+    except:
+        flag = "False"
+
     if("uname" in request.session):
-        return render(request,"UserApp/playfavsong.html",{"song":song,"next_song":next_song,"prev_song":prev_song})
+        return render(request,"UserApp/playfavsong.html",{"song":song,"next_song":next_song,"prev_song":prev_song,"flag":flag})
     else:
         return redirect(Home)
 
@@ -80,3 +86,6 @@ def search(request):
     query = (Q(name__icontains = sq) | Q(artist__icontains = sq))
     songs = Song.objects.filter(query)
     return render(request,"UserApp/albumsongs.html",{"songs":songs})
+
+def about(request):
+    return render(request,'UserApp/about.html')

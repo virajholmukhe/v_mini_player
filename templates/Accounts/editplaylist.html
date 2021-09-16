@@ -11,14 +11,14 @@
     <ons-list>
         <ons-list-header>Add Songs to playlist</ons-list-header>
         <a href="/accounts/addtoplaylist/{{playlist.id}}">
-            <ons-button modifier="large">Add songs to playlist</ons-button>
+            <ons-button ripple modifier="large">Add songs to playlist</ons-button>
         </a>
         <ons-list-header>Remove Songs</ons-list-header>
         {% for s in pls %}
         <form id="my_form" method="POST" action="/accounts/removesongfromplaylist/{{s.Song_id}}">{% csrf_token %}
             <input type="hidden" name="pid" value="{{playlist.id}}" >
             <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">
-                <ons-list-item>
+                <ons-list-item ripple>
                     <div class="left">
                         <ons-icon icon="md-delete" class="list-item__icon"></ons-icon>
                     </div>
@@ -30,7 +30,7 @@
 
         <ons-list-header>Playlist Name: {{playlist.name}}</ons-list-header>
         <a href="/accounts/renameplaylist/{{playlist.id}}">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <ons-icon icon="md-edit" class="list-item__icon"></ons-icon>
                 </div>
@@ -38,7 +38,7 @@
             </ons-list-item>
         </a>
         <a href="/accounts/deleteplaylist/{{playlist.id}}">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <ons-icon icon="md-delete" class="list-item__icon"></ons-icon>
                 </div>
@@ -46,7 +46,7 @@
             </ons-list-item>
         </a>
         <a href="/accounts/manageplaylist">
-            <ons-list-item>
+            <ons-list-item ripple>
                 <div class="left">
                     <ons-icon icon="md-close" class="list-item__icon"></ons-icon>
                 </div>

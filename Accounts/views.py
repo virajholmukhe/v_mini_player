@@ -1,4 +1,5 @@
 from re import S
+import re
 from django.core.exceptions import EmptyResultSet
 from django.db.models.fields.mixins import FieldCacheMixin
 from django.http.response import HttpResponse
@@ -24,6 +25,7 @@ def signup(request):
             new_user.username = username
             new_user.password=make_password(password)
             new_user.save()
+            messages.success(request,'User is successfully registered! Please Log-in')
             return redirect(login)
 
 def login(request):
@@ -39,6 +41,8 @@ def login(request):
             password_c = check_password(password,d_pass)
             if password_c:
                 request.session["uname"]=username
+
+            messages.success(request,f"Welcome! {username} : Enjoy your Music")
         except:
             messages.error(request, 'invalid username or password')
             return render(request,"Accounts/login.html")
@@ -102,7 +106,7 @@ def editProfile(request):
             profile=UserInfo.objects.get(username=request.session["uname"])
             return render(request,"Accounts/profile-edit.html",{"profile":profile})
         else:
-            redirect(login)
+            return redirect(login)
     else:
         if(UserInfo.objects.get(username=request.session["uname"])):
             profile1=UserInfo.objects.get(username=request.session["uname"])
@@ -110,7 +114,7 @@ def editProfile(request):
             profile1.last_name=request.POST["last_name"]
             profile1.email=request.POST["email"]
             profile1.save()
-            redirect(showProfile)
+            return redirect(showProfile)
         else:
             pass
 
@@ -132,7 +136,7 @@ def addToFav(request):
             fav = Favourite.objects.filter(user_id=request.session["uname"])
             return render(request,"UserApp/favourites.html",{"fav":fav,"songs":songs})
     else:
-        redirect(login)
+        return redirect(login)
 
 def allSongs(request,pid):
     songs = Song.objects.all()
@@ -147,17 +151,17 @@ def addToPlaylist(request,sid):
             s = Song.objects.get(id=sid)
             try:
                 pls = PlaylistSongs.objects.get(playlist_id=pid,Song_id=sid)
-                return redirect(managePlaylist)
+                return redirect(playlistSongs,pid)
             except:
                 pls = PlaylistSongs()
                 pls.playlist = pl
                 pls.Song = s
                 pls.save()
-                return redirect(managePlaylist)
+                return redirect(playlistSongs,pid)
         else:
             pass
     else:
-        redirect(login)
+        return redirect(login)
 
 def removeFromPlaylist(request,sid):
     if("uname" in request.session):
@@ -170,12 +174,12 @@ def removeFromPlaylist(request,sid):
         else:
             pass
     else:
-        redirect(login)
+        return redirect(login)
 
 
 def playlistSongs(request,pid):
     if("uname" in request.session):
         playlist = PlaylistSongs.objects.filter(playlist_id=pid)
-        return render(request,"UserApp/playlist.html",{"playlist":playlist})
+        return render(request,"UserApp/playlist.html",{"playlist":playlist,"pid":pid})
 
 

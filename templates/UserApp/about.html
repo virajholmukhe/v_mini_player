@@ -1,0 +1,62 @@
+{% extends 'UserApp/index.html' %}
+{% load static %}
+{% block Content %}
+
+    <ons-page>
+        <ons-toolbar>
+            <a href="/">
+                <div class="left"><ons-back-button>Home</ons-back-button></div>
+                <div class="center"></div>
+            </a>
+        </ons-toolbar>
+        <ons-card>
+            <img src="{% static 'Images/vminilogo.jpg' %}" alt="V mini player LOGO" style="width: 100%">
+            <div class="title">
+              V mini Music Player
+            </div>
+            <div class="content">
+                <p style="text-indent: 50px;">
+                    It is made for mobile users using ONSEN UI.
+                    User can signup/login into the account and create his own playlist which will be stored in his
+                    account. It changes its UI on the basis of user’s OS type in his device(android or iOS).
+                </p>
+            </div>
+        </ons-card>
+        <ons-list>
+            <ons-list-header>My Portfolio</ons-list-header>
+            <a href="https://virajholmukhe.pythonanywhere.com/" target="_blank">
+                <ons-list-item ripple>
+                    <i class="fas fa-user-tie" style="margin-right: 10px;"></i> Portfolio
+                </ons-list-item>
+            </a>
+        </ons-list>
+
+        <ons-list>
+            <ons-list-header>Social Links</ons-list-header>
+            <a href="https://github.com/virajholmukhe" target="_blank">
+                <ons-list-item ripple>
+                    <i class="fab fa-github" style="margin-right: 10px;"></i> Github
+                </ons-list-item>
+            </a>
+            <a href="https://www.linkedin.com/in/viraj-holmukhe/" target="_blank">
+                <ons-list-item ripple>
+                    <i class="fab fa-linkedin" style="margin-right: 10px;"></i> Linked-in
+                </ons-list-item>
+            </a>
+            <a href="https://www.instagram.com/indian_vir/" target="_blank">
+                <ons-list-item ripple>
+                    <i class="fab fa-instagram" style="margin-right: 10px;"></i> Instagram
+                </ons-list-item>
+            </a>
+            <a href="https://twitter.com/indian_vir" target="_blank">
+                <ons-list-item ripple>
+                    <i class="fab fa-twitter" style="margin-right: 10px;"></i> Twitter
+                </ons-list-item>
+            </a>
+
+
+        </ons-list>
+
+    </ons-page>
+
+{% endblock %}
