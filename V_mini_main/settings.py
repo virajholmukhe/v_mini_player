@@ -11,10 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # os.environ['django_secret_key']
 
-SECRET_KEY = os.environ['django_secret_key']
+SECRET_KEY = "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"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["vminiplayer.herokuapp.com","127.0.0.1"]
 

@@ -44,6 +44,19 @@
         {% endfor %}
     </ons-list>
     <ons-list>
+        <ons-list-header>Youtube MP3</ons-list-header>
+        <a href="/youtubemp3downloader">
+            <ons-list-item ripple>
+                <div class="left">
+                    <img class="list-item__thumbnail" src="https://clipart.info/images/ccovers/1590430652red-youtube-logo-png-xl.png">
+                </div>
+                <div class="center">
+                    <span class="list-item__title">Download mp3 songs from youtube</span>
+                    <span class="list-item__subtitle"></span>
+                </div>
+            </ons-list-item>
+        </a>
+    </ons-list>
 
     {% if "uname" in request.session %}
         {% if messages %}
